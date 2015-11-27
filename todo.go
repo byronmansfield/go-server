@@ -9,10 +9,13 @@ import (
 	"time"
 )
 
+// root endpoint
 func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Welcome!")
+	fmt.Fprintln(w, "Welcome from Go-Server!")
 }
 
+// base todo endpoint
+// returns array of todos
 func TodoIndex(w http.ResponseWriter, r *http.Request) {
 	var err error
 
@@ -24,9 +27,7 @@ func TodoIndex(w http.ResponseWriter, r *http.Request) {
 
 	todo := make([]Todo, 0)
 
-	if err != nil {
-		panic(err)
-	}
+	checkErr(err)
 
 	for rows.Next() {
 
@@ -67,9 +68,7 @@ func TodoShow(w http.ResponseWriter, r *http.Request) {
 
 	todo := make([]Todo, 0)
 
-	if err != nil {
-		panic(err)
-	}
+	checkErr(err)
 
 	for rows.Next() {
 
@@ -103,9 +102,7 @@ func TodoCreate(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 
-	if err != nil {
-		panic(err)
-	}
+	checkErr(err)
 
 	if err := r.Body.Close(); err != nil {
 		panic(err)
@@ -130,9 +127,7 @@ func TodoCreate(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	_, err = stmt.Exec(todo.Name, todo.Completed, todo.Due)
-	if err != nil {
-		panic(err)
-	}
+	checkErr(err)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusCreated)

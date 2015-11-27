@@ -1,5 +1,11 @@
 # Created by https://www.gitignore.io/api/archlinuxpackages,osx,go,bower,node,sass,yeoman,linux,vim
 
+# env file
+.env
+
+# executible
+go-server
+
 ### ArchLinuxPackages ###
 *.tar
 *.tar.*
