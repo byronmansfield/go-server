@@ -6,7 +6,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"time"
 )
 
 // root endpoint
@@ -33,13 +32,17 @@ func TodoIndex(w http.ResponseWriter, r *http.Request) {
 
 		var id int
 		var name string
+		var description string
 		var completed bool
-		var due time.Time
+		var created []byte
+		var updated []byte
+		var due []byte
+		var date_completed []byte
 
-		if err := rows.Scan(&id, &name, &completed, &due); err != nil {
+		if err := rows.Scan(&id, &name, &description, &completed, &created, &updated, &due, &date_completed); err != nil {
 			panic(err)
 		}
-		todo = append(todo, Todo{Id: id, Name: name, Completed: completed, Due: due})
+		todo = append(todo, Todo{Id: id, Name: name, Description: description, Completed: completed, Created: created, Updated: updated, Due: due, DateCompleted: date_completed})
 	}
 
 	if err := rows.Err(); err != nil {
@@ -74,13 +77,17 @@ func TodoShow(w http.ResponseWriter, r *http.Request) {
 
 		var id int
 		var name string
+		var description string
 		var completed bool
-		var due time.Time
+		var created []byte
+		var updated []byte
+		var due []byte
+		var date_completed []byte
 
-		if err := rows.Scan(&id, &name, &completed, &due); err != nil {
+		if err := rows.Scan(&id, &name, &description, &completed, &created, &updated, &due, &date_completed); err != nil {
 			panic(err)
 		}
-		todo = append(todo, Todo{Id: id, Name: name, Completed: completed, Due: due})
+		todo = append(todo, Todo{Id: id, Name: name, Description: description, Completed: completed, Created: created, Updated: updated, Due: due, DateCompleted: date_completed})
 	}
 
 	if err := rows.Err(); err != nil {

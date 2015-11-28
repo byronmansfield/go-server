@@ -1,13 +1,14 @@
 package main
 
-import "time"
-
 type Todo struct {
-	Id          int       `json:"id"`
-	Name        string    `json:"name"`
-	Description string    `json:"name"`
-	Completed   bool      `json:"completed"`
-	Due         time.Time `json:"due"`
+	Id            int    `json:"id"`
+	Name          string `json:"name"`
+	Description   string `json:"description"`
+	Completed     bool   `json:"completed"`
+	Created       []byte `json:"created"`
+	Updated       []byte `json:"updated"`
+	Due           []byte `json:"due"`
+	DateCompleted []byte `json:"date_completed"`
 }
 
 type Todos []Todo
