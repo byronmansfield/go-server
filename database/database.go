@@ -10,7 +10,6 @@ import (
 
 type DataBase struct {
 	Name     string
-	Table    string
 	Host     string
 	Port     string
 	User     string
@@ -22,7 +21,6 @@ var dbinfo DataBase
 // get database info from exported environment variables
 func getDbInfo() {
 	dbinfo.Name = os.Getenv("DB_NAME")
-	dbinfo.Table = os.Getenv("DB_TABLE")
 	dbinfo.Host = os.Getenv("DB_HOST")
 	dbinfo.Port = os.Getenv("DB_PORT")
 	dbinfo.User = os.Getenv("DB_USER")
