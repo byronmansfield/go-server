@@ -1,8 +1,9 @@
-package main
+package database
 
 import (
 	"bytes"
 	"database/sql"
+	"github.com/byronmansfield/go-server/models"
 	_ "github.com/go-sql-driver/mysql"
 	"os"
 )
@@ -44,12 +45,12 @@ func buildConnection(c DataBase) string {
 }
 
 // connect to database
-func dbConnect() *sql.DB {
+func DbConnect() *sql.DB {
 
 	getDbInfo()
 	dbConnection := buildConnection(dbinfo)
 	db, err := sql.Open("mysql", dbConnection)
-	checkErr(err)
+	models.CheckErr(err)
 
 	return db
 }
