@@ -25,9 +25,9 @@ func main() {
 
 	router.GET("/todo/:name", ta.GetTodo)
 
-	router.POST("/user", ta.CreateTodo)
+	router.POST("/todo", ta.CreateTodo)
 
-	router.DELETE("/user/:name", ta.DeleteTodo)
+	router.DELETE("/todo/:name", ta.DeleteTodo)
 
 	// start server
 	http.ListenAndServe(PORT, router)
