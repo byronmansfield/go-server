@@ -3,7 +3,7 @@ package database
 import (
 	"bytes"
 	"database/sql"
-	"github.com/byronmansfield/go-server/models"
+	"github.com/byronmansfield/go-server/helpers"
 	_ "github.com/go-sql-driver/mysql"
 	"os"
 )
@@ -48,7 +48,7 @@ func DbConnect() *sql.DB {
 	getDbInfo()
 	dbConnection := buildConnection(dbinfo)
 	db, err := sql.Open("mysql", dbConnection)
-	models.CheckErr(err)
+	helpers.CheckErr(err)
 
 	return db
 }

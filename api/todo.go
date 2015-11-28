@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"github.com/byronmansfield/go-server/database"
+	"github.com/byronmansfield/go-server/helpers"
 	"github.com/byronmansfield/go-server/models"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
@@ -27,7 +28,7 @@ func (ta TodoApi) TodoIndex(w http.ResponseWriter, r *http.Request, p httprouter
 
 	todo := make([]models.Todo, 0)
 
-	models.CheckErr(err)
+	helpers.CheckErr(err)
 
 	for rows.Next() {
 
@@ -82,7 +83,7 @@ func (ta TodoApi) GetTodo(w http.ResponseWriter, r *http.Request, p httprouter.P
 
 	todo := make([]models.Todo, 0)
 
-	models.CheckErr(err)
+	helpers.CheckErr(err)
 
 	for rows.Next() {
 
@@ -139,10 +140,10 @@ func (ta TodoApi) CreateTodo(w http.ResponseWriter, r *http.Request, p httproute
 
 	// Insert data to database
 	stmt, err := db.Prepare("INSERT INTO tasks(name, description, due) VALUES ($1, $2, $3)")
-	models.CheckErr(err)
+	helpers.CheckErr(err)
 
 	_, err = stmt.Exec(todo.Name, todo.Description, todo.Due)
-	models.CheckErr(err)
+	helpers.CheckErr(err)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusCreated)
@@ -158,10 +159,10 @@ func (ta TodoApi) DeleteTodo(w http.ResponseWriter, r *http.Request, p httproute
 
 	// Delete todo from database
 	stmt, err := db.Prepare("DELETE FROM tasks where name=?")
-	models.CheckErr(err)
+	helpers.CheckErr(err)
 
 	_, err = stmt.Exec(p.ByName("name"))
-	models.CheckErr(err)
+	helpers.CheckErr(err)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusCreated)
