@@ -23,7 +23,7 @@ func (ta TodoApi) Index(w http.ResponseWriter, r *http.Request, p httprouter.Par
 
 // base todo endpoint
 // returns array of todos
-func (ta TodoApi) TodoIndex(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func (ta TodoApi) GetTodos(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var err error
 
 	// connect to db
@@ -77,58 +77,32 @@ func (ta TodoApi) TodoIndex(w http.ResponseWriter, r *http.Request, p httprouter
 
 }
 
-// Get a todo by name
-func (ta TodoApi) GetTodo(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+// Get a todo by id
+func (ta TodoApi) GetTodoById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var err error
+	var todo models.Todo
 
 	// connect to db
 	db := database.DbConnect()
 	defer db.Close()
 
-	rows, err := db.Query("SELECT name FROM tasks where name = ?", p.ByName("name"))
+	err = db.QueryRow("SELECT * FROM tasks where id = ?", p.ByName("id")).Scan(&todo.Id, &todo.Name, &todo.Description, &todo.Completed, &todo.Created, &todo.Updated, &todo.Due, &todo.DateCompleted)
 
-	todo := make([]models.Todo, 0)
-
-	helpers.CheckErr(err)
-
-	for rows.Next() {
-
-		var id int
-		var name string
-		var description string
-		var completed bool
-		var created []byte
-		var updated []byte
-		var due []byte
-		var date_completed []byte
-
-		if err := rows.Scan(&name); err != nil {
-			panic(err)
+	if err == nil {
+		// 1 row
+		js, err := json.Marshal(todo)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
 		}
-		todo = append(todo, models.Todo{
-			Id:            id,
-			Name:          name,
-			Description:   description,
-			Completed:     completed,
-			Created:       created,
-			Updated:       updated,
-			Due:           due,
-			DateCompleted: date_completed,
-		})
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(js)
+	} else {
+		// error
+		fmt.Printf("Error is %s\n", err)
+		helpers.CheckErr(err)
 	}
 
-	if err := rows.Err(); err != nil {
-		panic(err)
-	}
-
-	js, err := json.Marshal(todo)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(js)
 }
 
 // create a todo

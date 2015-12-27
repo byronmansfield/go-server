@@ -18,9 +18,9 @@ func main() {
 	router.GET("/", ta.Index)
 
 	// Todo resources
-	router.GET("/todo", ta.TodoIndex)
+	router.GET("/todo", ta.GetTodos)
 
-	router.GET("/todo/:name", ta.GetTodo)
+	router.GET("/todo/:id", ta.GetTodoById)
 
 	router.POST("/todo", ta.CreateTodo)
 
