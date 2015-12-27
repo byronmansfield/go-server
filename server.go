@@ -1,16 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"github.com/byronmansfield/go-server/api"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 )
-
-// base endpoint
-func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Welcome from Go-Server!")
-}
 
 func main() {
 
@@ -19,6 +13,9 @@ func main() {
 
 	// Get Todo Api instance
 	ta := api.NewTodoApi()
+
+	// index
+	router.GET("/", ta.Index)
 
 	// Todo resources
 	router.GET("/todo", ta.TodoIndex)

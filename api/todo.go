@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/byronmansfield/go-server/database"
 	"github.com/byronmansfield/go-server/helpers"
 	"github.com/byronmansfield/go-server/models"
@@ -13,6 +14,11 @@ type TodoApi struct{}
 
 func NewTodoApi() *TodoApi {
 	return &TodoApi{}
+}
+
+// base endpoint
+func (ta TodoApi) Index(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	fmt.Fprintln(w, "Welcome from Go-Server!")
 }
 
 // base todo endpoint
