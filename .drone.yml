@@ -3,3 +3,4 @@ build:
   commands:
     - go get
     - go build
+    - go test api/todo_test.go
