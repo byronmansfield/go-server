@@ -1,5 +1,7 @@
 # RESTful API Built in Go
 
+[![Build Status](http://bmansfieldnebula.asuscomm.com:8000/api/badges/byronmansfield/go-server/status.svg)](http://bmansfieldnebula.asuscomm.com:8000/byronmansfield/go-server)
+
 This is a simple RESTful Server written in Go. It is intended to be for my
 personal learning as well as my generic boilerplate I can start from anytime I
 need to whip up another REST API or even just include package(s) of it in another project.
