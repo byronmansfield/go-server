@@ -1,3 +1,5 @@
+default: build
+
 BUILDPATH=$(CURDIR)
 GO=$(shell which go)
 GOINSTALL=$(GO) install
